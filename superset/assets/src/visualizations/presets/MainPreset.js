@@ -45,14 +45,17 @@ import WorldMapChartPlugin from '@superset-ui/legacy-plugin-chart-world-map';
 // Make sure to import '@superset-ui/legacy-preset-chart-nvd3/lib'
 // Not '@superset-ui/legacy-preset-chart-nvd3',
 // which will point to '@superset-ui/legacy-preset-chart-nvd3/esm' by default
-import { AreaChartPlugin, BarChartPlugin, BoxPlotChartPlugin, BubbleChartPlugin, BulletChartPlugin,
+import {
+  AreaChartPlugin, BarChartPlugin, BoxPlotChartPlugin, BubbleChartPlugin, BulletChartPlugin,
   CompareChartPlugin, DistBarChartPlugin, DualLineChartPlugin, LineChartPlugin,
-  LineMultiChartPlugin, PieChartPlugin, TimePivotChartPlugin } from '@superset-ui/legacy-preset-chart-nvd3/lib';
+  LineMultiChartPlugin, PieChartPlugin, TimePivotChartPlugin
+} from '@superset-ui/legacy-preset-chart-nvd3/lib';
 
 import DeckGLChartPreset from './DeckGLChartPreset';
 
 import FilterBoxChartPlugin from '../FilterBox/FilterBoxChartPlugin';
 import TimeTableChartPlugin from '../TimeTable/TimeTableChartPlugin';
+import AlarmChartPlugin from '../Alarm/AlarmChartPlugin';
 
 export default class MainPreset extends Preset {
   constructor() {
@@ -62,7 +65,8 @@ export default class MainPreset extends Preset {
         new DeckGLChartPreset(),
       ],
       plugins: [
-        new AreaChartPlugin().configure({ key: 'area' }),
+        // new AreaChartPlugin().configure({ key: 'area' }),
+        new AlarmChartPlugin().configure({ key: 'alarm' }),
         new BarChartPlugin().configure({ key: 'bar' }),
         new BigNumberChartPlugin().configure({ key: 'big_number' }),
         new BigNumberTotalChartPlugin().configure({ key: 'big_number_total' }),

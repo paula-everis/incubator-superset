@@ -45,7 +45,7 @@ const registry = getChartMetadataRegistry();
 const IMAGE_PER_ROW = 6;
 const LABEL_STYLE = { cursor: 'pointer' };
 const DEFAULT_ORDER = [
-  'line', 'big_number', 'table', 'filter_box', 'dist_bar', 'area', 'bar',
+  'line', 'big_number', 'table', 'filter_box', 'dist_bar', 'area', 'alarm', 'bar',
   'deck_polygon', 'pie', 'time_table', 'pivot_table', 'histogram',
   'big_number_total', 'deck_scatter', 'deck_hex', 'time_pivot', 'deck_arc',
   'heatmap', 'deck_grid', 'dual_line', 'deck_screengrid', 'line_multi',

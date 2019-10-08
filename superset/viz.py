@@ -2779,3 +2779,44 @@ viz_types = {
         and o.viz_type not in config.get("VIZ_TYPE_BLACKLIST")
     )
 }
+
+
+class AlarmViz(BaseViz):
+
+    """A data table with rich time-series related columns"""
+
+    viz_type = "alarm"
+    verbose_name = _("Alarm View")
+    credits = 'a <a href="https://github.com/airbnb/superset">Superset</a> original'
+    is_timeseries = False
+
+    def query_obj(self):
+        d = super().query_obj()
+        fd = self.form_data
+
+        if not fd.get("metrics"):
+            raise Exception(_("Pick at least one metric"))
+
+        if fd.get("groupby") and len(fd.get("metrics")) > 1:
+            raise Exception(
+                _("When using 'Group By' you are limited to use a single metric")
+            )
+        return d
+
+    def get_data(self, df):
+        fd = self.form_data
+        columns = None
+        values = self.metric_labels
+        if fd.get("groupby"):
+            values = self.metric_labels[0]
+            columns = fd.get("groupby")
+        pt = df.pivot_table(
+            index=DTTM_ALIAS, columns=columns, values=values, dropna=False
+        )
+        pt.index = pt.index.map(str)
+        pt = pt.sort_index()
+        return dict(
+            records=pt.to_dict(orient="index"),
+            columns=list(pt.columns),
+            is_group_by=len(fd.get("groupby")) > 0,
+        )

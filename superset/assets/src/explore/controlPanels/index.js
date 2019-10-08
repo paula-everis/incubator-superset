@@ -24,6 +24,7 @@ import { isFeatureEnabled, FeatureFlag } from 'src/featureFlags';
 import * as sections from './sections';
 import extraOverrides from './extraOverrides';
 
+import Alarm from './Alarm';
 import Area from './Area';
 import Bar from './Bar';
 import BigNumber from './BigNumber';
@@ -74,6 +75,7 @@ import DeckScatter from './DeckScatter';
 import DeckScreengrid from './DeckScreengrid';
 
 export const controlPanelConfigs = extraOverrides({
+  alarm: Alarm,
   area: Area,
   bar: Bar,
   big_number: BigNumber,

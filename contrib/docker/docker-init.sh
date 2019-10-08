@@ -26,8 +26,10 @@ superset db upgrade
 
 if [ "$SUPERSET_LOAD_EXAMPLES" = "yes" ]; then
     # Load some data to play with
-    superset load_examples
+    # superset load_examples
 fi
 
 # Create default roles and permissions
 superset init
+
+superset load_examples

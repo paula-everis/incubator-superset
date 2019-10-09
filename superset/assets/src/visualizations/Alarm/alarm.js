@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 
 import d3 from 'd3';
 import PropTypes from 'prop-types';
@@ -5,25 +6,32 @@ import PropTypes from 'prop-types';
 import './alarm.css';
 
 const propTypes = {
-    data: PropTypes.shape({
-    application_name: PropTypes.arrayOf(PropTypes.string),
-    }),
-  };
+    className: PropTypes.string,
+    application_name: PropTypes.string,
+    data: PropTypes.objectOf(PropTypes.objectOf(PropTypes.number)).isRequired,
+
+};
+
+const defaultProps = {
+    application_name: '',
+    data: null
+
+};
 
 function AlarmViz(element, props) {
-    const { data } = props;
+    console.log("### props ### ", props);
 
-    const { application_name } = data;
+    const { data, application_name } = props;
 
     element.innerHTML = '';
 
     //const application_name = data.form_data.application_name;
     //var records = [application_name, 12300, 0.1, 1131550, 0.25];
-    var records = ['facebook', 12300, 0.1, 1131550, 0.25];
+    var records = [application_name, data, 0.1, 1131550, 0.25];
 
     //var records = ['twitter', 12300, 0.1, 1131550, 0.25];
-    var cols = ['img', 'Alarmas', 'Usuarios'];
-    var colors = {
+    const cols = ['img', 'Alarmas', 'Usuarios'];
+    const colors = {
         'video': '#d40f1c',
         'web': '#808080',
         'facebook': '#3b5998',
@@ -31,16 +39,18 @@ function AlarmViz(element, props) {
         'instagram': '#ec008b',
         'twitter': '#04a9f4'
     };
-    var images = {
-        'video': './images/video_logo.png',
-        'web': './images/web_logo.png',
-        'facebook': './images/facebook_logo.png',
-        'whatsapp': './images/whatsapp_logo.png',
-        'instagram': './images/instagram_logo.png',
-        'twitter': './images/twitter_logo.png'
+
+    const vizLocation = '../../static/assets/images/alarm_imgs/';
+    const images = {
+        'video': vizLocation + 'video_logo.png',
+        'web': vizLocation + 'web_logo.png',
+        'facebook': vizLocation + 'facebook_logo.png',
+        'whatsapp': vizLocation + 'whatsapp_logo.png',
+        'instagram': vizLocation + 'instagram_logo.png',
+        'twitter': vizLocation + 'twitter_logo.png'
     };
 
-    console.log(images['facebook']);
+    console.log(data);
 
     const hMargin = 5;
     const vMargin = 17;
@@ -52,7 +62,7 @@ function AlarmViz(element, props) {
     const sizeFont2 = 0.8 * sizeFont1;
 
     // custom localization options
-    var myLocale = {
+    const myLocale = {
         "decimal": ",",
         "thousands": ".",
         "grouping": [3],
@@ -72,14 +82,14 @@ function AlarmViz(element, props) {
     // create a formatter for the number (grouped thousands with two significant digits). By default ',' means 'thousands' but we switched that into a '.' in our custom localization
     var numberFormat = localeFormatter.numberFormat(",");
 
-    
+
 
     var pctFormat = d3.format("%");
 
     const div = d3.select(element);
     //const div = d3.select("#row1");
 
-    
+
 
     //div.html('');
     const container = div.append("div")
@@ -171,7 +181,7 @@ function AlarmViz(element, props) {
 }
 
 
-AlarmViz.displayName = 'AlarmViz';
+AlarmViz.defaultProps = defaultProps;
 AlarmViz.propTypes = propTypes;
 
 export default AlarmViz;

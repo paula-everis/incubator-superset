@@ -24,7 +24,7 @@ import thumbnail from './images/thumbnail.png';
 const metadata = new ChartMetadata({
   credits: ['https://github.com/d3/'],
   description: '',
-  name: t('alarms Diagram'),
+  name: t('Alarm Custom'),
   thumbnail,
   useLegacyApi: true,
 });

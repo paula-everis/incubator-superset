@@ -17,6 +17,6 @@
  * under the License.
  */
 import { reactify } from '@superset-ui/chart';
-import Component from './alarm';
+import Component from './Alarm';
 
 export default reactify(Component);

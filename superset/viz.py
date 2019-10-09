@@ -2769,6 +2769,39 @@ class PartitionViz(NVD3TimeSeriesViz):
             levels = self.levels_for("agg_sum", [DTTM_ALIAS] + groups, df)
         return self.nest_values(levels)
 
+class AlarmViz(BaseViz):
+
+
+    viz_type = 'alarm'
+    verbose_name = _('Alarm')
+    credits = 'everis'
+    is_timeseries = True
+
+    def query_obj(self):
+
+        logging.info('query_obj Custom_Alarm:')
+        d = super(AlarmViz, self).query_obj()
+        
+        logging.info('query_obj Custom_Alarm: {}'.format(d))
+
+        metric = self.form_data.get('metric')
+        if not metric:
+            raise Exception(_('Pick a metric!'))
+        d['metrics'] = [self.form_data.get('metric')]
+        self.form_data['metric'] = metric
+        return d
+
+    def get_data(self, df):
+        form_data = self.form_data
+        
+        df.sort_values(by=df.columns[0], inplace=True)
+        compare_lag = form_data.get('compare_lag')
+        
+        return {
+            'data': df.values.tolist(),
+            'application_name': form_data.get('application_name', ''),
+        }
+
 
 viz_types = {
     o.viz_type: o
@@ -2781,42 +2814,3 @@ viz_types = {
 }
 
 
-class AlarmViz(BaseViz):
-
-    """A data table with rich time-series related columns"""
-
-    viz_type = "alarm"
-    verbose_name = _("Alarm View")
-    credits = 'a <a href="https://github.com/airbnb/superset">Superset</a> original'
-    is_timeseries = False
-
-    def query_obj(self):
-        d = super().query_obj()
-        fd = self.form_data
-
-        if not fd.get("metrics"):
-            raise Exception(_("Pick at least one metric"))
-
-        if fd.get("groupby") and len(fd.get("metrics")) > 1:
-            raise Exception(
-                _("When using 'Group By' you are limited to use a single metric")
-            )
-        return d
-
-    def get_data(self, df):
-        fd = self.form_data
-        columns = None
-        values = self.metric_labels
-        if fd.get("groupby"):
-            values = self.metric_labels[0]
-            columns = fd.get("groupby")
-        pt = df.pivot_table(
-            index=DTTM_ALIAS, columns=columns, values=values, dropna=False
-        )
-        pt.index = pt.index.map(str)
-        pt = pt.sort_index()
-        return dict(
-            records=pt.to_dict(orient="index"),
-            columns=list(pt.columns),
-            is_group_by=len(fd.get("groupby")) > 0,
-        )

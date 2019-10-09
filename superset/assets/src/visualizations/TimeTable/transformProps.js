@@ -26,6 +26,7 @@ export default function transformProps(chartProps) {
   } = formData;
   const { records, columns } = payload.data;
   const isGroupBy = groupby.length > 0;
+  
 
   // When there is a "group by",
   // each row in the table is a database column

@@ -17,9 +17,10 @@
  * under the License.
  */
 export default function transformProps(chartProps) {
-  const { queryData } = chartProps;
-
+  const { payload } = chartProps;
+  console.log("#### charrpoi", chartProps, payload);
   return {
-    data: queryData.data,
+    data: payload.data.data.length,
+    application_name: payload.data.application_name
   };
 }

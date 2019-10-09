@@ -489,6 +489,14 @@ export const controls = {
     description: t('Swap Groups and Columns'),
   },
 
+  application_name: {
+    type: 'TextControl',
+    label: t('Application'),
+    default: 'facebook',
+    description: t('Application for custom alarm'),
+  },
+
+
   show_markers: {
     type: 'CheckboxControl',
     label: t('Show Markers'),

@@ -65,7 +65,7 @@ export default class MainPreset extends Preset {
         new DeckGLChartPreset(),
       ],
       plugins: [
-        // new AreaChartPlugin().configure({ key: 'area' }),
+        new AreaChartPlugin().configure({ key: 'area' }),
         new AlarmChartPlugin().configure({ key: 'alarm' }),
         new BarChartPlugin().configure({ key: 'bar' }),
         new BigNumberChartPlugin().configure({ key: 'big_number' }),

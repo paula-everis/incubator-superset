@@ -2859,6 +2859,23 @@ class Superset(BaseSupersetView):
             bootstrap_data=json.dumps(d, default=utils.json_iso_dttm_ser),
         )
 
+    @event_logger.log_this
+    @expose("/customize")
+    def customize(self):
+        """ CUSTOMIZE VIEW ENDPOINT """
+
+
+     
+        payload = {
+            "user": "usuario"
+        }
+
+        return self.render_template(
+            "superset/basic.html",
+            entry="customize",
+            bootstrap_data=json.dumps(payload, default=utils.json_iso_dttm_ser),
+        )
+
     @api
     @handle_api_exception
     @has_access_api

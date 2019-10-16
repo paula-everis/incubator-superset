@@ -45,7 +45,23 @@
             {{ WARNING_MSG | safe }}
           </li>
         {% endif %}
-        {% include 'appbuilder/navbar_menu.html' %}
+         {% include 'appbuilder/navbar_menu.html' %}
+        <li>
+          <a href="/superset/customize" title="Customize" target="_self">
+            <i class="fa fa-sitemap"></i>&nbsp;
+            <SPAN>Customize</SPAN>
+            <!--<b class="caret"></b>-->
+          </a>
+        </li>
+
+        <li>
+          <a href="/superset/customize" title="Customize" target="_self">
+            <i class="fa fa-sitemap"></i>&nbsp;
+            <SPAN>Hola mundo</SPAN>
+            <!--<b class="caret"></b>-->
+          </a>
+        </li>
+       
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% include 'appbuilder/navbar_right.html' %}

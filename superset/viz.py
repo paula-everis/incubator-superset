@@ -1053,6 +1053,23 @@ class BigNumberViz(BaseViz):
         self.form_data["metric"] = metric
         return d
 
+class BigNumberGaugeViz(BaseViz):
+
+    """Put emphasis on a single metric with this big number viz"""
+
+    viz_type = "big_number_gauge"
+    verbose_name = _("Big Number with Gauge")
+    credits = 'a <a href="https://github.com/airbnb/superset">Superset</a> original'
+    is_timeseries = True
+
+    def query_obj(self):
+        d = super().query_obj()
+        metric = self.form_data.get("metric")
+        if not metric:
+            raise Exception(_("Pick a metric!"))
+        d["metrics"] = [self.form_data.get("metric")]
+        self.form_data["metric"] = metric
+        return d
 
 class BigNumberTotalViz(BaseViz):
 
@@ -2781,7 +2798,7 @@ class AlarmViz(BaseViz):
 
         logging.info('query_obj Custom_Alarm:')
         d = super(AlarmViz, self).query_obj()
-        
+
         logging.info('query_obj Custom_Alarm: {}'.format(d))
 
         metric = self.form_data.get('metric')
@@ -2793,10 +2810,10 @@ class AlarmViz(BaseViz):
 
     def get_data(self, df):
         form_data = self.form_data
-        
+
         df.sort_values(by=df.columns[0], inplace=True)
         compare_lag = form_data.get('compare_lag')
-        
+
         return {
             'data': df.values.tolist(),
             'application_name': form_data.get('application_name', ''),
@@ -2812,5 +2829,3 @@ viz_types = {
         and o.viz_type not in config.get("VIZ_TYPE_BLACKLIST")
     )
 }
-
-

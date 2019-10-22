@@ -56,6 +56,7 @@ import DeckGLChartPreset from './DeckGLChartPreset';
 import FilterBoxChartPlugin from '../FilterBox/FilterBoxChartPlugin';
 import TimeTableChartPlugin from '../TimeTable/TimeTableChartPlugin';
 import AlarmChartPlugin from '../Alarm/AlarmChartPlugin';
+import BigGaugeChartPlugin from '../bigNumberGauge';
 
 export default class MainPreset extends Preset {
   constructor() {
@@ -69,6 +70,7 @@ export default class MainPreset extends Preset {
         new AlarmChartPlugin().configure({ key: 'alarm' }),
         new BarChartPlugin().configure({ key: 'bar' }),
         new BigNumberChartPlugin().configure({ key: 'big_number' }),
+        new BigGaugeChartPlugin().configure({ key: 'big_number_gauge'}),
         new BigNumberTotalChartPlugin().configure({ key: 'big_number_total' }),
         new BoxPlotChartPlugin().configure({ key: 'box_plot' }),
         new BubbleChartPlugin().configure({ key: 'bubble' }),

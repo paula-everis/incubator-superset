@@ -146,7 +146,7 @@ class BigNumberVis extends React.PureComponent {
         subColor: '#666666'
       },
       lineWidth: 0.15,
-      limitMax: 100,     // If false, max value increases automatically if value > maxValue
+      limitMax: true,     // If false, max value increases automatically if value > maxValue
       limitMin: false,     // If true, the min value of the gauge will be fixed
       colorStart: '#6FADCF',   // Colors
       colorStop: '#8FC0DA',    // just experiment with them
@@ -154,9 +154,9 @@ class BigNumberVis extends React.PureComponent {
       generateGradient: true,
       highDpiSupport: true,     // High resolution support
       staticZones: [
-        {strokeStyle: "#F03E3E", min: 0, max: 200}, // Red from 100 to 130
-        {strokeStyle: "#30B32D", min: 200, max: 900}, // Green
-        {strokeStyle: "#FFDD00", min: 900, max: 1000}, // Yellow
+        {strokeStyle: "#F03E3E", min: 0, max: 20}, // Red from 100 to 130
+        {strokeStyle: "#30B32D", min: 20, max: 90}, // Green
+        {strokeStyle: "#FFDD00", min: 90, max: 100}, // Yellow
       ]
   };
 
@@ -180,7 +180,7 @@ class BigNumberVis extends React.PureComponent {
       >
       <ReactCoffeeGauge
               min="0"
-              max="1000"
+              max="100"
               value={text}
               opts={gauge_opts}
           />

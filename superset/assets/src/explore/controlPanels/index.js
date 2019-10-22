@@ -28,6 +28,7 @@ import Alarm from './Alarm';
 import Area from './Area';
 import Bar from './Bar';
 import BigNumber from './BigNumber';
+import BigNumberGauge from './BigNumberGauge';
 import BigNumberTotal from './BigNumberTotal';
 import BoxPlot from './BoxPlot';
 import Bubble from './Bubble';
@@ -79,6 +80,7 @@ export const controlPanelConfigs = extraOverrides({
   area: Area,
   bar: Bar,
   big_number: BigNumber,
+  big_number_gauge: BigNumberGauge,
   big_number_total: BigNumberTotal,
   box_plot: BoxPlot,
   bubble: Bubble,

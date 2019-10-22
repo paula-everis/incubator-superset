@@ -20,8 +20,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
-// import Gauge from 'react-gaugejs';
-import Gauge from 'react-svg-gauge';
 import { XYChart, AreaSeries, CrossHair, LinearGradient } from '@data-ui/xy-chart';
 import { BRAND_COLOR } from '@superset-ui/color';
 import { smartDateVerboseFormatter } from '@superset-ui/time-format';
@@ -104,7 +102,6 @@ class BigNumberVis extends React.PureComponent {
   constructor(props) {
     super(props);
     this.gradientId = shortid.generate();
-    this.state = {value: formatBigNumber(bigNumber)};
   }
 
   getClassName() {
@@ -126,12 +123,42 @@ class BigNumberVis extends React.PureComponent {
     return container;
   }
 
-  handleResultTextChange(value) {
-    this.setState({value: value});
-  }
-
   renderHeader(maxHeight) {
     const { bigNumber, formatBigNumber, width } = this.props;
+    const text = bigNumber;
+
+    var gauge_opts = {
+      angle: 30, // The span of the gauge arc
+      radiusScale: 1, // Relative radius
+      pointer: {
+        length: 0.5, // // Relative to gauge radius
+        strokeWidth: 0.024, // The thickness
+        color: '#000000' // Fill color
+      },
+      renderTicks: {
+        divisions: 5,
+        divWidth: 0.8,
+        divLength: 0.7,
+        divColor: '#333333',
+        subDivisions: 3,
+        subLength: 0.5,
+        subWidth: 0.6,
+        subColor: '#666666'
+      },
+      lineWidth: 0.15,
+      limitMax: 100,     // If false, max value increases automatically if value > maxValue
+      limitMin: false,     // If true, the min value of the gauge will be fixed
+      colorStart: '#6FADCF',   // Colors
+      colorStop: '#8FC0DA',    // just experiment with them
+      strokeColor: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]],  // to see which ones work best for you
+      generateGradient: true,
+      highDpiSupport: true,     // High resolution support
+      staticZones: [
+        {strokeStyle: "#F03E3E", min: 0, max: 200}, // Red from 100 to 130
+        {strokeStyle: "#30B32D", min: 200, max: 900}, // Green
+        {strokeStyle: "#FFDD00", min: 900, max: 1000}, // Yellow
+      ]
+  };
 
     const container = this.createTemporaryContainer();
     document.body.appendChild(container);
@@ -145,47 +172,21 @@ class BigNumberVis extends React.PureComponent {
     document.body.removeChild(container);
 
     return (
-      <React.Fragment>
-        <div
-          className="header-line"
-          style={{height:maxHeight,
-          }}
-          >
-          //   <p>Value: {this.state.text}</p>
-          //     <Gauge
-          //       value={50}
-          //       minValue={0}
-          //       maxValue={100}
-          //       animationSpeed={32}
-          //       options={{
-          //         angle: 0.35,
-          //         lineWidth: 0.1,
-          //         radiusScale: 1,
-          //         pointer: {
-          //           length: 0.6,
-          //           strokeWidth: 0.035,
-          //           color: '#000000',
-          //         },
-          //         limitMax: false,
-          //         limitMin: false,
-          //         colorStart: '#6F6EA0',
-          //         colorStop: '#C0C0DB',
-          //         strokeColor: '#EEEEEE',
-          //         generateGradient: true,
-          //         highDpiSupport: true,
-          //       }}
-          //       textChangeHandler={handleResultTextChange}
-          //       donut
-          //
-          //       // any other props are passed through to the canvas element
-          // className='gauge-canvas'
-          // style={{height: '150px'}}
-          // />
-
-          </div>
-          </React.Fragment>
-        );
-      }
+      <div
+        className="header-line"
+        style={{
+          height: maxHeight,
+        }}
+      >
+      <ReactCoffeeGauge
+              min="0"
+              max="1000"
+              value={text}
+              opts={gauge_opts}
+          />
+      </div>
+    );
+  }
 
   renderSubheader(maxHeight) {
     const { subheader, width } = this.props;

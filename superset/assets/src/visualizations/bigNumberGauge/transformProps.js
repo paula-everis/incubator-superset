@@ -24,79 +24,83 @@ import { renderTooltipFactory } from './BigNumber';
 const TIME_COLUMN = '__timestamp';
 
 export default function transformProps(chartProps) {
-  const { width, height, formData, queryData } = chartProps;
-  const {
-    colorPicker,
-    compareLag: compareLagInput,
-    compareSuffix = '',
-    headerFontSize,
-    subheaderFontSize,
-    metric,
-    showTrendLine,
-    startYAxisAtZero,
-    subheader = '',
-    vizType,
-    yAxisFormat,
-  } = formData;
-  const { data } = queryData;
 
-  let mainColor;
-  if (colorPicker) {
-    const { r, g, b } = colorPicker;
-    mainColor = color.rgb(r, g, b).hex();
-  }
+  console.log('#PROPS DATA', chartProps)
 
-  let bigNumber;
-  let trendLineData;
-  const metricName = metric && metric.label ? metric.label : metric;
-  const compareLag = Number(compareLagInput) || 0;
-  const supportTrendLine = vizType === 'big_number';
-  const supportAndShowTrendLine = supportTrendLine && showTrendLine;
-  let percentChange = 0;
-  let formattedSubheader = subheader;
-  if (supportTrendLine) {
-    const sortedData = [...data].sort((a, b) => a[TIME_COLUMN] - b[TIME_COLUMN]);
-    bigNumber = sortedData[sortedData.length - 1][metricName];
-    if (compareLag > 0) {
-      const compareIndex = sortedData.length - (compareLag + 1);
-      if (compareIndex >= 0) {
-        const compareValue = sortedData[compareIndex][metricName];
-        percentChange =
-          compareValue === 0 ? 0 : (bigNumber - compareValue) / Math.abs(compareValue);
-        const formatPercentChange = getNumberFormatter(NumberFormats.PERCENT_SIGNED_1_POINT);
-        formattedSubheader = `${formatPercentChange(percentChange)} ${compareSuffix}`;
-      }
-    }
-    trendLineData = supportAndShowTrendLine
-      ? sortedData.map(point => ({ x: point[TIME_COLUMN], y: point[metricName] }))
-      : null;
-  } else {
-    bigNumber = data[0][metricName];
-    trendLineData = null;
-  }
+  // const { width, height, formData, queryData } = chartProps;
+  // const {
+  //   colorPicker,
+  //   compareLag: compareLagInput,
+  //   compareSuffix = '',
+  //   headerFontSize,
+  //   subheaderFontSize,
+  //   metric,
+  //   showTrendLine,
+  //   startYAxisAtZero,
+  //   subheader = '',
+  //   vizType,
+  //   yAxisFormat,
+  // } = formData;
+  // const { data } = queryData;
 
-  let className = '';
-  if (percentChange > 0) {
-    className = 'positive';
-  } else if (percentChange < 0) {
-    className = 'negative';
-  }
+  // let mainColor;
+  // if (colorPicker) {
+  //   const { r, g, b } = colorPicker;
+  //   mainColor = color.rgb(r, g, b).hex();
+  // }
 
-  const formatValue = getNumberFormatter(yAxisFormat);
+  // let bigNumber;
+  // let trendLineData;
+  // const metricName = metric && metric.label ? metric.label : metric;
+  // const compareLag = Number(compareLagInput) || 0;
+  // const supportTrendLine = vizType === 'big_number';
+  // const supportAndShowTrendLine = supportTrendLine && showTrendLine;
+  // let percentChange = 0;
+  // let formattedSubheader = subheader;
+  // if (supportTrendLine) {
+  //   const sortedData = [...data].sort((a, b) => a[TIME_COLUMN] - b[TIME_COLUMN]);
+  //   bigNumber = sortedData[sortedData.length - 1][metricName];
+  //   if (compareLag > 0) {
+  //     const compareIndex = sortedData.length - (compareLag + 1);
+  //     if (compareIndex >= 0) {
+  //       const compareValue = sortedData[compareIndex][metricName];
+  //       percentChange =
+  //         compareValue === 0 ? 0 : (bigNumber - compareValue) / Math.abs(compareValue);
+  //       const formatPercentChange = getNumberFormatter(NumberFormats.PERCENT_SIGNED_1_POINT);
+  //       formattedSubheader = `${formatPercentChange(percentChange)} ${compareSuffix}`;
+  //     }
+  //   }
+  //   trendLineData = supportAndShowTrendLine
+  //     ? sortedData.map(point => ({ x: point[TIME_COLUMN], y: point[metricName] }))
+  //     : null;
+  // } else {
+  //   bigNumber = data[0][metricName];
+  //   trendLineData = null;
+  // }
+
+  // let className = '';
+  // if (percentChange > 0) {
+  //   className = 'positive';
+  // } else if (percentChange < 0) {
+  //   className = 'negative';
+  // }
+
+  // const formatValue = getNumberFormatter(yAxisFormat);
 
   return {
-    width,
-    height,
-    bigNumber,
-    className,
-    formatBigNumber: formatValue,
-    headerFontSize,
-    subheaderFontSize,
-    mainColor,
-    renderTooltip: renderTooltipFactory(formatValue),
-    showTrendLine: supportAndShowTrendLine,
-    startYAxisAtZero,
-    subheader: formattedSubheader,
-    trendLineData,
+    data: null,
+    // width: 100,
+    // height: 100,
+    // bigNumber: 100,
+    // className: 'asd',
+    // formatBigNumber: 'formatValue',
+    // headerFontSize: 123,
+    // subheaderFontSize: 123,
+    // mainColor: 123,
+    // renderTooltip: "renderTooltipFactory(formatValue)",
+    // showTrendLine: "supportAndShowTrendLine",
+    // startYAxisAtZero: "123",
+    // subheader: "formattedSubheader",
+    // trendLineData: 123,
   };
 }

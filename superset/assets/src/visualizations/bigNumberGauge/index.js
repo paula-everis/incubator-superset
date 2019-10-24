@@ -31,7 +31,7 @@ const metadata = new ChartMetadata({
 export default class BigGaugeChartPlugin extends ChartPlugin {
   constructor() {
     super({
-      loadChart: () => import('./BigNumber'),
+      loadChart: () => import('./BigNumber.jsx'),
       metadata,
       transformProps,
     });

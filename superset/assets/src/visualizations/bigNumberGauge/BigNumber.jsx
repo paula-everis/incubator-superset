@@ -24,6 +24,7 @@ import { XYChart, AreaSeries, CrossHair, LinearGradient } from '@data-ui/xy-char
 import { BRAND_COLOR } from '@superset-ui/color';
 import { smartDateVerboseFormatter } from '@superset-ui/time-format';
 import { computeMaxFontSize } from '@superset-ui/dimension';
+import ReactCoffeeGauge from 'react-coffee-gauge';
 
 import './BigNumber.css';
 
@@ -71,19 +72,20 @@ function identity(x) {
 }
 
 const propTypes = {
-  className: PropTypes.string,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  bigNumber: PropTypes.number.isRequired,
-  formatBigNumber: PropTypes.func,
-  headerFontSize: PropTypes.number,
-  subheader: PropTypes.string,
-  subheaderFontSize: PropTypes.number,
-  showTrendLine: PropTypes.bool,
-  startYAxisAtZero: PropTypes.bool,
-  trendLineData: PropTypes.array,
-  mainColor: PropTypes.string,
-  renderTooltip: PropTypes.func,
+  // className: PropTypes.string,
+  // width: PropTypes.number.isRequired,
+  // height: PropTypes.number.isRequired,
+  // bigNumber: PropTypes.number.isRequired,
+  // formatBigNumber: PropTypes.func,
+  // headerFontSize: PropTypes.number,
+  // subheader: PropTypes.string,
+  // subheaderFontSize: PropTypes.number,
+  // showTrendLine: PropTypes.bool,
+  // startYAxisAtZero: PropTypes.bool,
+  // trendLineData: PropTypes.array,
+  // mainColor: PropTypes.string,
+  // renderTooltip: PropTypes.func,
+  data: PropTypes.string
 };
 const defaultProps = {
   className: '',
@@ -96,6 +98,7 @@ const defaultProps = {
   trendLineData: null,
   mainColor: BRAND_COLOR,
   renderTooltip: renderTooltipFactory(identity),
+  data: ''
 };
 
 class BigNumberVis extends React.PureComponent {
@@ -150,15 +153,15 @@ class BigNumberVis extends React.PureComponent {
       limitMin: false,     // If true, the min value of the gauge will be fixed
       colorStart: '#6FADCF',   // Colors
       colorStop: '#8FC0DA',    // just experiment with them
-      strokeColor: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]],  // to see which ones work best for you
+      strokeColor: [[0.0, "#a9d70b"], [0.50, "#f9c802"], [1.0, "#ff0000"]],  // to see which ones work best for you
       generateGradient: true,
       highDpiSupport: true,     // High resolution support
       staticZones: [
-        {strokeStyle: "#F03E3E", min: 0, max: 20}, // Red from 100 to 130
-        {strokeStyle: "#30B32D", min: 20, max: 90}, // Green
-        {strokeStyle: "#FFDD00", min: 90, max: 100}, // Yellow
+        { strokeStyle: "#F03E3E", min: 0, max: 20 }, // Red from 100 to 130
+        { strokeStyle: "#30B32D", min: 20, max: 90 }, // Green
+        { strokeStyle: "#FFDD00", min: 90, max: 100 }, // Yellow
       ]
-  };
+    };
 
     const container = this.createTemporaryContainer();
     document.body.appendChild(container);
@@ -178,12 +181,7 @@ class BigNumberVis extends React.PureComponent {
           height: maxHeight,
         }}
       >
-      <ReactCoffeeGauge
-              min="0"
-              max="100"
-              value={text}
-              opts={gauge_opts}
-          />
+        hola
       </div>
     );
   }
@@ -216,6 +214,7 @@ class BigNumberVis extends React.PureComponent {
       </div>
     );
   }
+
 
   renderTrendline(maxHeight) {
     const {
@@ -259,28 +258,62 @@ class BigNumberVis extends React.PureComponent {
     const { showTrendLine, height, headerFontSize, subheaderFontSize } = this.props;
     const className = this.getClassName();
 
-    if (showTrendLine) {
-      const chartHeight = Math.floor(PROPORTION.TRENDLINE * height);
-      const allTextHeight = height - chartHeight;
+    // if (showTrendLine) {
+    //   const chartHeight = Math.floor(PROPORTION.TRENDLINE * height);
+    //   const allTextHeight = height - chartHeight;
 
-      return (
-        <div className={className}>
-          <div className="text-container" style={{ height: allTextHeight }}>
-            {this.renderHeader(Math.ceil(headerFontSize * (1 - PROPORTION.TRENDLINE) * height))}
-            {this.renderSubheader(
-              Math.ceil(subheaderFontSize * (1 - PROPORTION.TRENDLINE) * height),
-            )}
-          </div>
-          {this.renderTrendline(chartHeight)}
-        </div>
-      );
-    }
+    //   return (
+    //     <div className={className}>
+    //       <div className="text-container" style={{ height: allTextHeight }}>
+    //         {this.renderHeader(Math.ceil(headerFontSize * (1 - PROPORTION.TRENDLINE) * height))}
+    //         {this.renderSubheader(
+    //           Math.ceil(subheaderFontSize * (1 - PROPORTION.TRENDLINE) * height),
+    //         )}
+    //       </div>
+    //       {this.renderTrendline(chartHeight)}
+    //     </div>
+    //   );
+    // }
+    let gauge_opts = {
+      angle: 0, // The span of the gauge arc
+      radiusScale: 1, // Relative radius
+      pointer: {
+        length: 0.5, // // Relative to gauge radius
+        strokeWidth: 0.024, // The thickness
+        color: '#000000' // Fill color
+      },
+      renderTicks: {
+          divisions: 5,
+          divWidth: 0.8,
+          divLength: 0.7,
+          divColor: '#333333',
+          subDivisions: 3,
+          subLength: 0.5,
+          subWidth: 0.6,
+          subColor: '#666666'
+      },
+      lineWidth: 0.15,
+      limitMax: false,     // If false, max value increases automatically if value > maxValue
+      limitMin: false,     // If true, the min value of the gauge will be fixed
+      colorStart: '#6FADCF',   // Colors
+      colorStop: '#8FC0DA',    // just experiment with them
+      strokeColor: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]],  // to see which ones work best for you
+      generateGradient: true,
+      highDpiSupport: true,     // High resolution support
+      staticZones: [
+            {strokeStyle: "#F03E3E", min: 0, max: 200}, // Red from 100 to 130
+            {strokeStyle: "#30B32D", min: 200, max: 900}, // Green
+            {strokeStyle: "#FFDD00", min: 900, max: 1000}, // Yellow
+      ]
+    };
 
     return (
-      <div className={className} style={{ height }}>
-        {this.renderHeader(Math.ceil(headerFontSize * height))}
-        {this.renderSubheader(Math.ceil(subheaderFontSize * height))}
-      </div>
+      <ReactCoffeeGauge
+        min="0"
+        max="100"
+        value="20"
+        opts={gauge_opts}
+      />
     );
   }
 }

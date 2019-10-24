@@ -1071,6 +1071,16 @@ class BigNumberGaugeViz(BaseViz):
         self.form_data["metric"] = metric
         return d
 
+    def get_data(self, df):
+        form_data = self.form_data
+
+        
+
+        return {
+            'data': form_data,
+            'application_name': form_data.get('application_name', ''),
+        }
+
 class BigNumberTotalViz(BaseViz):
 
     """Put emphasis on a single metric with this big number viz"""

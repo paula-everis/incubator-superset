@@ -187,7 +187,8 @@ class BigNumberVis extends React.PureComponent {
   }
 
   renderSubheader(maxHeight) {
-    const { subheader, width } = this.props;
+    const { bigNumber, width } = this.props;
+    const subheader = bigNumber;
     let fontSize = 0;
     if (subheader) {
       const container = this.createTemporaryContainer();
@@ -221,14 +222,14 @@ class BigNumberVis extends React.PureComponent {
       width,
       trendLineData,
       mainColor,
-      subheader,
+      bigNumber,
       renderTooltip,
       startYAxisAtZero,
     } = this.props;
 
     return (
       <XYChart
-        ariaLabel={`Big number visualization ${subheader}`}
+        ariaLabel={`Big number visualization`}
         xScale={{ type: 'timeUtc' }}
         yScale={{
           type: 'linear',
@@ -257,6 +258,8 @@ class BigNumberVis extends React.PureComponent {
   render() {
     const { showTrendLine, height, headerFontSize, subheaderFontSize } = this.props;
     const className = this.getClassName();
+    const chartHeight = Math.floor(PROPORTION.TRENDLINE * height);
+    const allTextHeight = height - chartHeight;
 
     // if (showTrendLine) {
     //   const chartHeight = Math.floor(PROPORTION.TRENDLINE * height);
@@ -308,12 +311,20 @@ class BigNumberVis extends React.PureComponent {
     };
 
     return (
-      <ReactCoffeeGauge
-        min="0"
-        max="100"
-        value="20"
-        opts={gauge_opts}
-      />
+      <div className={className}>
+        <div className="text-container" style={{ height: allTextHeight }}>
+          <ReactCoffeeGauge
+            min="0"
+            max="100"
+            value={this.bigNumber}
+            opts={gauge_opts}
+          />
+          {this.renderSubheader(
+               Math.ceil(subheaderFontSize * (1 - PROPORTION.TRENDLINE) * height),
+             )}
+          </div>
+        {/* {this.renderTrendline(chartHeight)} */}
+      </div>
     );
   }
 }

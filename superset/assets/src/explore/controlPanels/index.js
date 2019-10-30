@@ -49,6 +49,7 @@ import Iframe from './Iframe';
 import Line from './Line';
 import LineMulti from './LineMulti';
 import Mapbox from './Mapbox';
+import AlarmMap from './AlarmMap';
 import Markup from './Markup';
 import PairedTtest from './PairedTtest';
 import Para from './Para';
@@ -126,6 +127,7 @@ export const controlPanelConfigs = extraOverrides({
   deck_polygon: DeckPolygon,
   deck_scatter: DeckScatter,
   deck_screengrid: DeckScreengrid,
+  alarm_map: AlarmMap,
 });
 
 export default controlPanelConfigs;

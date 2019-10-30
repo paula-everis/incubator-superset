@@ -57,6 +57,7 @@ import FilterBoxChartPlugin from '../FilterBox/FilterBoxChartPlugin';
 import TimeTableChartPlugin from '../TimeTable/TimeTableChartPlugin';
 import AlarmChartPlugin from '../Alarm/AlarmChartPlugin';
 import BigGaugeChartPlugin from '../bigNumberGauge';
+import AlarmMapChartPlugin from '../AlarmMap';
 
 export default class MainPreset extends Preset {
   constructor() {
@@ -68,6 +69,7 @@ export default class MainPreset extends Preset {
       plugins: [
         new AreaChartPlugin().configure({ key: 'area' }),
         new AlarmChartPlugin().configure({ key: 'alarm' }),
+        new AlarmMapChartPlugin().configure({key: 'alarm_map'}),
         new BarChartPlugin().configure({ key: 'bar' }),
         new BigNumberChartPlugin().configure({ key: 'big_number' }),
         new BigGaugeChartPlugin().configure({ key: 'big_number_gauge'}),
